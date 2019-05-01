@@ -1,0 +1,1 @@
+# wdio-screenshot-comparison-service

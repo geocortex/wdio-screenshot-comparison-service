@@ -1,6 +1,6 @@
 {
-  "name": "@geocortex/wdio-screenshot-comparison-service",
-  "version": "1.0.0",
+  "name": "wdio-screenshot-comparison-service",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "files": [

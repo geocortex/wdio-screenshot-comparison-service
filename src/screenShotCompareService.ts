@@ -5,19 +5,19 @@ import * as fs from "fs-extra";
 import * as compareImages from "resemblejs/compareImages";
 import { Test } from "mocha";
 
-const log = logger("@geocortex/ScreenShotComparisonService");
+const log = logger("wdio-screenshot-comparison-service");
 
-interface Options {
+type Options = {
   referenceName: (options: any) => string;
   screenshotName: (options: any) => string;
   diffName: (options: any) => string;
   misMatchTolerance: number;
-}
+};
 
-interface CheckElementOptions {
+type CheckElementOptions = {
   screenshotNumber: Number;
   misMatchTolerance: Number;
-}
+};
 
 export default class ScreenShotCompareService {
   currentSuite: Mocha.Suite = null;

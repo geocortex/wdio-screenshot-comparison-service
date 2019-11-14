@@ -17,6 +17,8 @@ type Options = {
 type CheckElementOptions = {
   screenshotNumber: Number;
   misMatchTolerance: Number;
+  ignoreOptions: string;
+  scaleToSameSize: boolean;
 };
 
 export default class ScreenShotCompareService {
@@ -81,7 +83,9 @@ export default class ScreenShotCompareService {
           screenshotPath,
           referencePath,
           {
-            outputDiff: true
+            outputDiff: true,
+            ignore: options.ignoreOptions,
+            scaleToSameSize: options.scaleToSameSize
           }
         );
 
@@ -99,7 +103,9 @@ export default class ScreenShotCompareService {
           return this.createResultReport(
             misMatchPercentage,
             false,
-            isSameDimensions
+            isSameDimensions,
+            screenshotPath,
+            referencePath
           );
         } else {
           log.info(`Image is within tolerance or the same`);
@@ -108,13 +114,21 @@ export default class ScreenShotCompareService {
           return this.createResultReport(
             misMatchPercentage,
             true,
-            isSameDimensions
+            isSameDimensions,
+            screenshotPath,
+            referencePath
           );
         }
       } else {
         log.info("first run - create reference file");
         await fs.copyFile(screenshotPath, referencePath);
-        return this.createResultReport(0, true, true);
+        return this.createResultReport(
+          0,
+          true,
+          true,
+          screenshotPath,
+          referencePath
+        );
       }
     };
   }
@@ -154,13 +168,17 @@ export default class ScreenShotCompareService {
   createResultReport(
     misMatchPercentage,
     isWithinMisMatchTolerance,
-    isSameDimensions
+    isSameDimensions,
+    screenshotPath,
+    referencePath,
   ) {
     return {
       misMatchPercentage,
       isWithinMisMatchTolerance,
       isSameDimensions,
-      isExactSameImage: misMatchPercentage === 0
+      isExactSameImage: misMatchPercentage === 0,
+      screenshotPath,
+      referencePath
     };
   }
 }

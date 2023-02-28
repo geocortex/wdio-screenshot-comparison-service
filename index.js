@@ -1,2 +1,5 @@
-var ScreenShotCompareService = require("./dist/screenShotCompareService").default;
-module.exports = new ScreenShotCompareService();
+import ScreenShotCompareService from "./dist/screenShotCompareService.js";
+export {
+    ScreenShotCompareService
+};
+export default new ScreenShotCompareService();

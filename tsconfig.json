@@ -7,7 +7,7 @@
         "allowSyntheticDefaultImports": true,
         "baseUrl": ".",
         "outDir": "dist",
-        "types": ["node", "webdriverio/async", "@wdio/mocha-framework", "expect-webdriverio"]
+        "types": ["node", "@wdio/types", "@wdio/mocha-framework", "expect-webdriverio"]
     },
     "include": [
         "src/**/*",

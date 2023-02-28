@@ -5,7 +5,7 @@ import * as fs from "fs-extra";
 import compareImages from "resemblejs/compareImages.js";
 import { Test } from "mocha";
 
-const log = (logger as any).default("wdio-screenshot-comparison-service");
+const log = logger("wdio-screenshot-comparison-service");
 
 type Options = {
   referenceName: (options: any) => string;
@@ -49,10 +49,10 @@ export default class ScreenShotCompareService {
   }
 
   before(capabilities, specs) {
-    browser.addCommand("checkElement", this.checkElement(browser, this.config));
+    global.browser.addCommand("checkElement", this.checkElement(global.browser, this.config));
   }
 
-  checkElement(browser: Browser<"async">, config: Options) {
+  checkElement(browser: Browser, config: Options) {
     const getCurrentTest = () => this.currentTest;
 
     return async (elementSelector: string, options: CheckElementOptions) => {

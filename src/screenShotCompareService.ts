@@ -1,8 +1,8 @@
 import logger from "@wdio/logger";
-import { parse as parsePlatform } from "platform";
+import platform from "platform";
 import { Browser } from "webdriverio";
 import * as fs from "fs-extra";
-import * as compareImages from "resemblejs/compareImages";
+import compareImages from "resemblejs/compareImages.js";
 import { Test } from "mocha";
 
 const log = logger("wdio-screenshot-comparison-service");
@@ -49,7 +49,7 @@ export default class ScreenShotCompareService {
   }
 
   before(capabilities, specs) {
-    browser.addCommand("checkElement", this.checkElement(browser, this.config));
+    global.browser.addCommand("checkElement", this.checkElement(global.browser, this.config));
   }
 
   checkElement(browser: Browser, config: Options) {
@@ -62,7 +62,7 @@ export default class ScreenShotCompareService {
         // @ts-ignore
         () => (window as any).navigator.userAgent
       );
-      const browserContext: any = { ...browser, ...parsePlatform(userAgent) };
+      const browserContext: any = { ...browser, ...platform.parse(userAgent) };
 
       const context: any = {
         test,

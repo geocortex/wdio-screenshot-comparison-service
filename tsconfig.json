@@ -1,13 +1,13 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "target": "es2017",
-        "lib": ["es2017"],
+        "module": "esnext",
+        "target": "ES2021",
+        "lib": ["dom", "dom.iterable", "es2021"],
         "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
         "baseUrl": ".",
-        "typeRoots" : ["./node_modules/@types"],
         "outDir": "dist",
-        "types": ["node", "webdriverio", "@wdio/mocha-framework", "mocha"]
+        "types": ["node", "@wdio/types", "@wdio/mocha-framework", "expect-webdriverio"]
     },
     "include": [
         "src/**/*",

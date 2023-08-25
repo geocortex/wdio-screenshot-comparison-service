@@ -1,7 +1,8 @@
 import logger from "@wdio/logger";
+import type { Services } from '@wdio/types'
 import platform from "platform";
 import { Browser } from "webdriverio";
-import * as fs from "fs-extra";
+import fs from "fs-extra";
 import compareImages from "resemblejs/compareImages.js";
 import { Test } from "mocha";
 
@@ -21,35 +22,35 @@ type CheckElementOptions = {
   scaleToSameSize: boolean;
 };
 
-export default class ScreenShotCompareService {
+export default class ScreenShotCompareService implements Services.ServiceInstance  {
   currentSuite: Mocha.Suite = null;
   currentTest: Mocha.Test = null;
-  config: Options = null;
+  options: Options = null;
 
   constructor() {
     this.currentSuite = null;
     this.currentTest = null;
-    this.config = null;
+    this.options = null;
   }
 
-  onPrepare(config: any, capabilities: WebDriver.Capabilities): void {
-    this.config = config.ScreenShotCompareService;
+  onPrepare(config, capabilities): void {
+    this.options = config.ScreenShotCompareService;
   }
 
   onComplete(
-    exitCode: any,
-    config: any,
-    capabilities: WebDriver.Capabilities
+    exitCode,
+    config,
+    capabilities
   ): void {
     //
   }
 
   beforeSession(config, capabilities) {
-    this.config = config.ScreenShotCompareService;
+    this.options = config.ScreenShotCompareService;
   }
 
   before(capabilities, specs) {
-    global.browser.addCommand("checkElement", this.checkElement(global.browser, this.config));
+    global.browser.addCommand("checkElement", this.checkElement(global.browser, this.options));
   }
 
   checkElement(browser: Browser, config: Options) {
@@ -137,7 +138,7 @@ export default class ScreenShotCompareService {
    * Hook that gets executed before the suite starts
    * @param {Object} suite suite details
    */
-  beforeSuite(suite: Mocha.Suite) {
+  beforeSuite(suite) {
     this.currentSuite = suite;
   }
 
